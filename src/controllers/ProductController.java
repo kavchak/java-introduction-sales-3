@@ -2,14 +2,13 @@ package controllers;
 
 import models.Product;
 import views.SalesView;
+import utils.Rounder;
 
-// Controller
 public class ProductController {
 
     Product model;
     SalesView view;
 
-    // Конструктор
     public ProductController(Product model, SalesView view) {
         this.model = model;
         this.view = view;
@@ -19,13 +18,20 @@ public class ProductController {
 
         view.getInputs();
 
-        // Здесь, реализуйте:
-        // 1) получение имени товара через модель;
-        // 2) вызов методов расчетов доходов и налога;
-        // 3) округление расчетных значений;
-        // 4) вывод расчетов по заданному формату.
+        String productName = model.getName();
 
-        String output = "[здесь должен быть вывод по формату]";
+        double income = model.calculateIncome();
+        double tax = model.calculateTax();
+        double netIncome = model.calculateNetIncome();
+
+        double incomeRound = Rounder.round(income);
+        double taxRound = Rounder.round(tax);
+        double netIncomeRound = Rounder.round(netIncome);
+
+        String output = "Product name: " + productName + "\n" +
+                "Total income (UAH): " + incomeRound + "\n" +
+                "Tax amount (UAH): " + taxRound + "\n" +
+                "Net income (UAH): " + netIncomeRound;
 
         view.getOutput(output);
     }
